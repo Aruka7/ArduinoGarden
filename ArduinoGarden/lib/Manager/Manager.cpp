@@ -51,8 +51,10 @@ void MainManager::ChangeDisplayToDebug() {
 
 void MainManager::CheckSensors() {
 	if (sensors_check_timer.CheckTimer() == ATimerStatus::EXPIRED) {
+		sensors_check_timer.Start();
 		_model->_sensorsValueStorage->SurveyAllSensors();
 		_model->_timeStorage->SurveyTime();
 		_display->Draw();
+		
 	}
 }

@@ -3,10 +3,13 @@
 #include "Manager.h"
 #include <Wire.h> 
 
-uint32_t a = 12;
+#define DEBUG_MODE 1
 
 MainManager* manager;
 void setup() {
+  #if DEBUG_MODE == 1
+  Serial.begin(9600);
+  #endif
   manager = new MainManager();
 
 }
@@ -14,4 +17,5 @@ void setup() {
 void loop() {
   manager->CheckEncoder();
   manager->CheckSensors();
+  
 }
