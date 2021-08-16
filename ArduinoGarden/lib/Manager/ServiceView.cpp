@@ -87,6 +87,9 @@ void ServiceView::Draw(){
 
 void ServiceView::HandleCommand(EncoderAction action){
 	if (action == EncoderAction::Release) return;
+	if(_pos == 0 && action == EncoderAction::LeftHold){
+		_changeToPreviosDisplay->Execute();
+	}
 	bool flag = false; //���� ���������� �������� �������
 	if (_pos >= TIME_LIMIT_POSITION) flag = true; //� 9�� ���������� ������� ��������� �������
 

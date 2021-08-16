@@ -6,6 +6,7 @@ ChangeDisplayToServiceCommand::ChangeDisplayToServiceCommand(MainManager* manage
 	_manager = manager;
 }
 void ChangeDisplayToServiceCommand::Execute() {
+	
 	_manager->ChangeDisplayToService();
 }
 ChangeDisplayToServiceCommand::~ChangeDisplayToServiceCommand(){

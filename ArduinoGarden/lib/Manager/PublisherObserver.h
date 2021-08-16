@@ -6,6 +6,7 @@
 class IEncoderObserver { //���������
 public:
 	virtual void HandleCommand(EncoderAction action) = 0;
+	virtual ~IEncoderObserver() = 0;
 };
 
 class IPublisher { //��������

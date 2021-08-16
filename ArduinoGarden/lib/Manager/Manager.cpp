@@ -30,7 +30,8 @@ void MainManager::CheckEncoder() {
 	if (_enc->isLeftH()) command = EncoderAction::LeftHold;
 	if (_enc->isPress()) command = EncoderAction::Press;          // ������� �� ������ (+ �������)
 	if (command == EncoderAction::Release) return;
-	_encActionPublisher->Notify(command); //��������� ���� ����������� � ������� ��������
+	_encActionPublisher->Notify(command);
+	_display->Draw();
 }
 
 void MainManager::ChangeDisplayToService() {
@@ -38,7 +39,7 @@ void MainManager::ChangeDisplayToService() {
 	delete _display;
 	_display = new ServiceView(_lcd, _model, new ChangeDisplayToDebugCommand(this), new ChangeDisplayToDebugCommand(this));
 	_encActionPublisher->Attach(_display);
-	_display->Draw();
+
 }
 
 void MainManager::ChangeDisplayToDebug() {
@@ -55,6 +56,10 @@ void MainManager::CheckSensors() {
 		_model->_sensorsValueStorage->SurveyAllSensors();
 		_model->_timeStorage->SurveyTime();
 		_display->Draw();
-		
 	}
 }
+
+void MainManager::TestMessage(){
+	Serial.println("Тестовое сообщение");
+}
+

@@ -32,5 +32,6 @@ public:
 	void ChangeDisplayToService(); 
 	void ChangeDisplayToDebug(); 
 	void CheckSensors(); 
+	void TestMessage();
 };
 #endif
