@@ -35,6 +35,8 @@ public:
 	void SetRel7(uint8_t value);
 	void SetActuator(uint8_t value);
 
+	void SetRel(uint8_t relayNumber, uint8_t value);
+
 
 };
 #endif

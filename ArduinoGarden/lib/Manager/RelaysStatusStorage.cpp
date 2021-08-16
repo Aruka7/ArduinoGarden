@@ -67,3 +67,32 @@ void RelayStatusStorage :: SetActuator(uint8_t value) {
 	Actuator = value;
 	//_threadHandler.AddTask(StopActuator, 8); //todo Ðàáîòàòü íå áóäåò íàäî äîáèòü
 }
+
+void RelayStatusStorage::SetRel(uint8_t relayNumber, uint8_t value){
+	switch (relayNumber)
+	{
+	case 1:
+		SetRel1(value);
+		break;
+	case 2:
+		SetRel2(value);
+		break;
+	case 3:
+		SetRel3(value);
+		break;
+	case 4:
+		SetRel4(value);
+		break;
+	case 5:
+		SetRel5(value);
+		break;
+	case 6:
+		SetRel6(value);
+		break;
+	case 7:
+		SetRel7(value);
+		break;
+	default:
+		break;
+	}
+}

@@ -6,7 +6,7 @@
 class AbstractOperation{
 public:
     Model* model;
-    bool IsComplete;
+    bool IsCompleted;
     virtual void Execute()=0;
     AbstractOperation(Model* model);
     virtual  ~AbstractOperation()=0;
