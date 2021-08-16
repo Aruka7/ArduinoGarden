@@ -1,0 +1,13 @@
+#ifndef CUSTOM_CHARS_DEFINE
+#define CUSTOM_CHARS_DEFINE
+uint8_t arrowSymbol[8] =
+{
+B01000,
+B00100,
+B00010,
+B11111,
+B00010,
+B00100,
+B01000
+};
+#endif
