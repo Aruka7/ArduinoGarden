@@ -5,6 +5,10 @@
 
 class AbstractOperation{
 public:
-
+    Model* model;
+    bool IsComplete;
+    virtual void Execute()=0;
+    AbstractOperation(Model* model);
+    virtual  ~AbstractOperation()=0;
 };
 #endif
