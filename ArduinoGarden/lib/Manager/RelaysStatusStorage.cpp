@@ -65,7 +65,7 @@ void RelayStatusStorage :: SetActuator(uint8_t value) {
 	analogWrite(ACT_PWM, _pwm);
 	_actuatorWorkTimer.Start();
 	Actuator = value;
-	//_threadHandler.AddTask(StopActuator, 8); //todo Ðàáîòàòü íå áóäåò íàäî äîáèòü
+	//_threadHandler.AddTask(StopActuator, 8); //todo actuator off delay
 }
 
 void RelayStatusStorage::SetRel(uint8_t relayNumber, uint8_t value){
