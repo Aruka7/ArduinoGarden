@@ -1,5 +1,5 @@
-#ifndef RELAYSWITCH_DEFINE
-#define RELAYSWITCH_DEFINE
+#ifndef ACTSWITCH_DEFINE
+#define ACTSWITCH_DEFINE
 
 #include "AbstractOperation.h"
 #include <stdint.h>

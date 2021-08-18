@@ -56,3 +56,23 @@ void SensorsValueStorage::SurveySens4() {
 	Sens4_value = analogRead(SENS4);
 	digitalWrite(SENS_SUPPLY, 0);
 }
+
+int SensorsValueStorage::SurveySensor(uint8_t sensorNumber){
+	switch (sensorNumber)
+	{
+	case 1:
+		SurveySens1();
+		return Sens1_value;
+	case 2:
+		SurveySens2();
+		return Sens2_value;
+	case 3:
+		SurveySens3();
+		return Sens3_value;
+	case 4:
+		SurveySens4();
+		return Sens4_value;
+	default:
+		break;
+	}
+}
