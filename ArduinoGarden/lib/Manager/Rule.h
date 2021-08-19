@@ -6,6 +6,6 @@
 class Rule {
 private:
     List<AbstractOperation> _listOperation;
-
+public:
 };
 #endif
