@@ -56,7 +56,16 @@ void SensorsValueStorage::SurveySens4() {
 	Sens4_value = analogRead(SENS4);
 	digitalWrite(SENS_SUPPLY, 0);
 }
-
+void SensorsValueStorage::SurveyTemperature(){
+	#if DHTISENABLE == 1
+	temperature = dht->readTemperature();
+	#endif
+}
+void SensorsValueStorage::SurveyHumidity(){
+	#if DHTISENABLE == 1
+	humidity = dht->readHumidity();
+	#endif
+}
 int SensorsValueStorage::SurveySensor(uint8_t sensorNumber){
 	switch (sensorNumber)
 	{

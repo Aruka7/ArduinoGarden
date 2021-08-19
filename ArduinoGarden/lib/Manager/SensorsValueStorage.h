@@ -37,6 +37,8 @@ public:
 	void SurveySens3();
 	//Survey sens 4
 	void SurveySens4();
+	void SurveyTemperature();
+	void SurveyHumidity();
 
 	int SurveySensor(uint8_t sensorNumber);
 };
