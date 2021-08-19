@@ -16,3 +16,79 @@ void AnalogSensorChecker::Execute(){
 AnalogSensorChecker::~AnalogSensorChecker()
 {
 }
+
+char* AnalogSensorChecker::GetString(){
+    char* tmp = new char[11]{"S "};
+    char number[1];
+    itoa(_sensorNumber, number, DEC);
+    strcat(tmp, number);
+    strcat(tmp, " ");
+    char excess[1];
+    if(_isExceccMode){
+        excess[0] = '>';
+    }
+    else{
+        excess[0] = '<';
+    }
+    strcat(tmp, excess);
+    strcat(tmp, " ");
+    char value[4];
+    itoa(_threashold, value, DEC);
+    strcat(tmp, value);
+    return tmp;
+}
+uint8_t AnalogSensorChecker::GetCursorPosition(){
+    return _cursorPosition;
+}
+void AnalogSensorChecker::HandleCommand(EncoderAction action){
+    if(action == EncoderAction::Left){
+        if(_cursorPosition == 0) _cursorPosition = ANALOGCHECKER_CURSOR_POS_LENGTH;
+        _cursorPosition--;
+        return;
+    }
+    if(action == EncoderAction::Right){
+        if(_cursorPosition == ANALOGCHECKER_CURSOR_POS_LENGTH - 1) {
+            _cursorPosition = 0;
+            return;
+        }
+        _cursorPosition++;
+        return;
+    }
+    if(action == EncoderAction::LeftHold){
+        switch (_cursorPosition)
+        {
+        case 0: return;
+        case 1: 
+            _sensorNumber--;
+            if(_sensorNumber == 0) _sensorNumber = 4;
+            return;
+        case 2:
+            _isExceccMode = !_isExceccMode;
+            return;
+        case 3:
+            _threashold -= 32;
+            if(_threashold < 0) _threashold = 1024;
+            return;
+        default:
+            break;
+        }
+    }
+    if(action == EncoderAction::RightHold){
+        switch (_cursorPosition)
+        {
+        case 0: return;
+        case 1: 
+            _sensorNumber++;
+            if(_sensorNumber == 5) _sensorNumber = 1;
+            return;
+        case 2:
+             _isExceccMode = !_isExceccMode;
+        case 3:
+            _threashold += 32;
+            if(_threashold > 1024) _threashold = 0;
+             return;
+        default:
+            break;
+        }
+    }
+}

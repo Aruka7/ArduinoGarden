@@ -1,6 +1,6 @@
 #include "AbstractOperation.h"
 AbstractOperation :: AbstractOperation(Model* model){
     this->model = model;
-    IsComplete = false;
+    IsCompleted = false;
 }
 AbstractOperation :: ~AbstractOperation(){}; 
