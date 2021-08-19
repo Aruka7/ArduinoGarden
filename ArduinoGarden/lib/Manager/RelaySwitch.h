@@ -4,11 +4,13 @@
 #include "AbstractOperation.h"
 #include <stdint.h>
 #include "Model.h"
+#define RELAYSWITCH_CURSOR_POS_LENGTH 3
 class RelaySwitch : public AbstractOperation
 {
 private:
-uint8_t _cursorPosition;
-    uint8_t _cursorPositions[3] = {0, 2, 4};
+    uint8_t _cursorPosition;
+    uint8_t _cursorPositions[RELAYSWITCH_CURSOR_POS_LENGTH] 
+    = {0, 2, 4};
     uint8_t _relayNumber;
     bool _switchingType; //Type of direction switching 1 is mean that relay will turn on and otherwise 0 mean off
 public:
