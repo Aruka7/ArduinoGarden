@@ -1,9 +1,10 @@
-#ifndef AO_DEFINE
-#define AO_DEFINE
+#ifndef ABSTRACTOPERATION_DEFINE
+#define ABSTRACTOPERATION_DEFINE
 
 #include "Model.h"
 #include "PublisherObserver.h"
 
+class Model;
 class AbstractOperation : public IEncoderObserver {
 public:
     Model* model;

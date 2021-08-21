@@ -12,7 +12,8 @@ private:
     uint8_t _cursorPositions[RTC_CURSOR_POS_LENGTH] 
     = {0, 4, 8};
 
-    int32_t _minutes;
+    uint8_t hour;
+    uint8_t minute;
     int32_t Abs(int32_t number);
 public:
     RTCTimer(uint8_t hour, uint8_t minute, Model* model);
@@ -25,8 +26,8 @@ public:
 
 RTCTimer::RTCTimer(uint8_t hour, uint8_t minute, Model* model) : AbstractOperation(model)
 {
-    _minutes = ((int32_t)hour)*60*60*1000 + ((int32_t)minute*60*1000);
-
+    this->hour = hour;
+    this->minute = minute; 
 }
 int RTCTimer::Abs(int number){
     if(number < 0) return -number;
@@ -37,12 +38,13 @@ RTCTimer::~RTCTimer(){}
 void RTCTimer::Execute(){
     model->_timeStorage->SurveyTime();
     int32_t tmp = ((int32_t)model->_timeStorage->GetHour())*60*60*1000 + ((int32_t)model->_timeStorage->GetMinute()*60*1000);
-    int32_t firstResult = Abs(_minutes - tmp);
+    int32_t mileseconds = ((int32_t)hour)*60*60*1000 + ((int32_t)minute*60*1000);
+    int32_t firstResult = Abs(mileseconds- tmp);
     if(firstResult < (SLEEP_PERIOD + SLEEP_PERIOD/10)){ //todo Заменить на настройки, учесть в будущем интервалы меньше секунды
         IsCompleted = true;
         return;
     }
-    int32_t secondResult = Abs(_minutes - (tmp + 24*60*60*1000));
+    int32_t secondResult = Abs(mileseconds - (tmp + 24*60*60*1000));
     if(secondResult < (SLEEP_PERIOD + SLEEP_PERIOD/10)){ 
         IsCompleted = true;
         return;
@@ -50,33 +52,30 @@ void RTCTimer::Execute(){
 }
 
 char* RTCTimer::GetString(){
-    char* tmp = new char[8]{"R "};
-    char number[2];
-    itoa(_relayNumber, number, DEC);
-    strcat(tmp, number);
-    strcat(tmp, " ");
-    char switcher[3];
-    if(_switchingType){
-        strcat(switcher, "on");
-    }
-    else{
-        strcat(switcher, "off");
-    }
-    strcat(tmp, switcher);
+    char* tmp = new char[12]{"RTC "};
+    char hours[2];
+    itoa(hour, hours, DEC);
+    if(hour < 10) strcat(tmp, " ");
+    strcat(tmp, hours);
+    strcat(tmp, "h ");
+    char min[2];
+    itoa(minute, min, DEC);
+    strcat(tmp, min);
+    strcat(tmp, "m");
     return tmp;
     
 }
-uint8_t RelaySwitch::GetCursorPosition(){
+uint8_t RTCTimer::GetCursorPosition(){
     return _cursorPosition;
 }
-void RelaySwitch::HandleCommand(EncoderAction action){
+void RTCTimer::HandleCommand(EncoderAction action){
     if(action == EncoderAction::Left){
-        if(_cursorPosition == 0) _cursorPosition = RELAYSWITCH_CURSOR_POS_LENGTH;
+        if(_cursorPosition == 0) _cursorPosition = RTC_CURSOR_POS_LENGTH;
         _cursorPosition--;
         return;
     }
     if(action == EncoderAction::Right){
-        if(_cursorPosition == RELAYSWITCH_CURSOR_POS_LENGTH - 1) {
+        if(_cursorPosition == RTC_CURSOR_POS_LENGTH - 1) {
             _cursorPosition = 0;
             return;
         }
@@ -88,11 +87,13 @@ void RelaySwitch::HandleCommand(EncoderAction action){
         {
         case 0: return;
         case 1: 
-            _relayNumber--;
-            if(_relayNumber == 0) _relayNumber = 7;
+            if(hour == 0) hour = 23;
+            return;
+            hour--;
             return;
         case 2:
-            _switchingType = !_switchingType;
+            minute--;
+            if(minute == 0) minute = 59;
             return;
         default:
             break;
@@ -103,12 +104,13 @@ void RelaySwitch::HandleCommand(EncoderAction action){
         {
         case 0: return;
         case 1: 
-            _relayNumber++;
-            if(_relayNumber == 8) _relayNumber = 1;
+            hour++;
+            if(hour == 24) hour = 0;
             return;
         case 2:
-             _switchingType = !_switchingType;
-             return;
+            minute++;
+            if(minute == 60) minute = 1;
+            return;
         default:
             break;
         }
